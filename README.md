@@ -63,3 +63,4 @@ python -m py_compile 0*.py
 - The notebooks are designed for interactive use in `marimo`.
 - Several demos use lightweight local datasets from `scikit-learn` so they can run quickly.
 - The repository is educational first; the code prioritizes clarity and visual intuition over production abstractions.
+
