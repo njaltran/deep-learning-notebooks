@@ -1,6 +1,6 @@
 # Deep Learning Marimo Notebooks
 
-Interactive `marimo` notebooks for learning core deep learning concepts, sequence models, transformers, and modern LLM techniques.
+Interactive `marimo` notebooks for learning core deep learning concepts, sequence models, transformers, modern LLM techniques, and foundational NLP vectorization.
 
 ## Contents
 
@@ -12,6 +12,7 @@ Interactive `marimo` notebooks for learning core deep learning concepts, sequenc
 - `06_transformer_architecture.py` — positional encoding, transformer blocks, masking, and a toy transformer
 - `07_language_models.py` — tokenization, causal masking, sampling, and a mini GPT
 - `08_modern_llm_techniques.py` — LoRA, embeddings, RAG, and RLHF concepts
+- `09_text_preprocessing_and_bag_of_words.py` — text cleaning, Bag-of-Words weighting schemes, TF-IDF, and document-frequency filtering
 
 ## Quickstart
 
@@ -54,6 +55,7 @@ python -m py_compile 0*.py
 ├── 06_transformer_architecture.py
 ├── 07_language_models.py
 ├── 08_modern_llm_techniques.py
+├── 09_text_preprocessing_and_bag_of_words.py
 └── docs/
 ```
 
