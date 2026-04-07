@@ -54,13 +54,12 @@ python -m py_compile 0*.py
 ├── 06_transformer_architecture.py
 ├── 07_language_models.py
 ├── 08_modern_llm_techniques.py
-├── utils/
 └── docs/
 ```
 
 ## Notes
 
 - The notebooks are designed for interactive use in `marimo`.
+- Each notebook is self-contained and does not depend on local helper modules.
 - Several demos use lightweight local datasets from `scikit-learn` so they can run quickly.
 - The repository is educational first; the code prioritizes clarity and visual intuition over production abstractions.
-

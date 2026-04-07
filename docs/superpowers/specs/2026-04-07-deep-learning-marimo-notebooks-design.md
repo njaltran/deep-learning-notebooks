@@ -14,8 +14,6 @@ A series of 8 progressive marimo notebooks that teach deep learning and LLMs thr
 deep-learning-notebooks/
 ├── pyproject.toml                # uv project definition
 ├── README.md                     # Series overview and setup
-├── utils/
-│   └── viz.py                    # Shared visualization helpers
 ├── 01_neurons_and_networks.py
 ├── 02_training_deep_networks.py
 ├── 03_convolutional_networks.py
@@ -176,16 +174,11 @@ Every notebook follows this structure:
 
 **Code:** Fine-tune a small model with LoRA using HuggingFace PEFT. Build a simple RAG pipeline with sentence-transformers and a local vector store.
 
-## Shared Utilities (`utils/viz.py`)
+## Notebook Independence
 
-Reusable components to keep notebooks focused on content:
-
-- `plot_network(layers: list[int])` - Draw a neural network architecture diagram
-- `plot_attention_heatmap(weights, tokens)` - Interactive attention visualization
-- `plot_loss_curves(history)` - Training/validation loss and accuracy plots
-- `plot_gradient_flow(named_params)` - Gradient magnitude per layer
-- `create_training_controls()` - Standard slider group for LR, batch size, epochs
-- Consistent plotly theme (dark mode, colorblind-friendly palette)
+Reusable helpers should be kept inside the notebook that uses them unless they are truly
+required in multiple places. Each notebook should be executable on its own without any
+local helper package or shared runtime module.
 
 ## Technical Constraints
 

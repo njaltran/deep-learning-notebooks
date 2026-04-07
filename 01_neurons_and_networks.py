@@ -207,15 +207,100 @@ def _(mo):
 
 @app.cell
 def _(n_hidden_layers, neurons_per_layer):
-    import sys
-    sys.path.insert(0, ".")
-    from utils.viz import plot_network
+    import numpy as _np
+    import plotly.graph_objects as _go
+
+    def _plot_network(layers: list[int], title: str) -> _go.Figure:
+        fig = _go.Figure()
+        max_neurons = max(layers)
+        x_spacing = 1.5
+        node_x, node_y, node_text = [], [], []
+
+        for layer_idx, n_neurons in enumerate(layers):
+            x = layer_idx * x_spacing
+            y_positions = _np.linspace(
+                -(n_neurons - 1) / 2, (n_neurons - 1) / 2, n_neurons
+            )
+
+            for neuron_idx, y in enumerate(y_positions):
+                node_x.append(x)
+                node_y.append(y)
+                if layer_idx == 0:
+                    node_text.append(f"Input {neuron_idx + 1}")
+                elif layer_idx == len(layers) - 1:
+                    node_text.append(f"Output {neuron_idx + 1}")
+                else:
+                    node_text.append(f"L{layer_idx} N{neuron_idx + 1}")
+
+            if layer_idx > 0:
+                prev_n = layers[layer_idx - 1]
+                prev_x = (layer_idx - 1) * x_spacing
+                prev_y_positions = _np.linspace(
+                    -(prev_n - 1) / 2, (prev_n - 1) / 2, prev_n
+                )
+                for prev_y in prev_y_positions:
+                    for current_y in y_positions:
+                        fig.add_trace(
+                            _go.Scatter(
+                                x=[prev_x, x],
+                                y=[prev_y, current_y],
+                                mode="lines",
+                                line=dict(color="rgba(150,150,150,0.3)", width=1),
+                                showlegend=False,
+                                hoverinfo="skip",
+                            )
+                        )
+
+        fig.add_trace(
+            _go.Scatter(
+                x=node_x,
+                y=node_y,
+                mode="markers+text",
+                marker=dict(
+                    size=25,
+                    color="#636EFA",
+                    line=dict(width=2, color="white"),
+                ),
+                text=node_text,
+                textposition="top center",
+                textfont=dict(size=8),
+                showlegend=False,
+            )
+        )
+
+        for layer_idx, n_neurons in enumerate(layers):
+            label = (
+                "Input"
+                if layer_idx == 0
+                else ("Output" if layer_idx == len(layers) - 1 else f"Hidden {layer_idx}")
+            )
+            fig.add_annotation(
+                x=layer_idx * x_spacing,
+                y=max_neurons / 2 + 0.8,
+                text=f"{label}<br>({n_neurons} neurons)",
+                showarrow=False,
+                font=dict(size=10),
+            )
+
+        fig.update_layout(
+            template="plotly_dark",
+            title=title,
+            showlegend=False,
+            xaxis=dict(visible=False),
+            yaxis=dict(visible=False, scaleanchor="x"),
+            height=400,
+            margin=dict(l=50, r=30, t=50, b=50),
+            font=dict(size=12),
+        )
+        return fig
 
     layers = [2] + [neurons_per_layer.value] * n_hidden_layers.value + [1]
     total_params = sum(
         layers[i] * layers[i + 1] + layers[i + 1] for i in range(len(layers) - 1)
     )
-    fig_net = plot_network(layers, title=f"Network: {layers}  |  Total parameters: {total_params}")
+    fig_net = _plot_network(
+        layers, title=f"Network: {layers}  |  Total parameters: {total_params}"
+    )
     fig_net
     return
 
